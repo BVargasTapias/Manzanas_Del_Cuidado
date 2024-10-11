@@ -57,4 +57,3 @@ CREATE TABLE Solicitudes (
     FOREIGN KEY (FK_ID_Usuario) REFERENCES Usuario (ID_Usuario)
 )
 
-SELECT * FROM ;
