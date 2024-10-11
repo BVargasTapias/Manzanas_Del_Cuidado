@@ -9,8 +9,7 @@ CREATE DATABASE BBDD_Manzanas_Del_Cuidado
 
 CREATE TABLE Manzanas (
     ID_Manzanas INT AUTO_INCREMENT PRIMARY KEY,
-    Man_Nombre VARCHAR (20),
-    Man_Localidad VARCHAR (20),
+    Man_Nombre SET ('Bosa', 'Suba', 'Chapinero'),
     Man_Direccion VARCHAR (20)
 )
 
@@ -35,7 +34,7 @@ CREATE TABLE Servicios_Manzanas (
 
 CREATE TABLE Usuario (
     ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
-    Usu_TipoDocumento SET ('Cedula de Ciudadania', 'Tarjeta de Identidad'),
+    Usu_TipoDocumento SET ('CC','TI'),
     Usu_NumeroDocumento INT (10),
     Usu_NombreCompleto VARCHAR (20),
     Usu_Telefono INT (10),
@@ -56,3 +55,5 @@ CREATE TABLE Solicitudes (
     FK_ID_Usuario INT (10),
     FOREIGN KEY (FK_ID_Usuario) REFERENCES Usuario (ID_Usuario)
 )
+
+SELECT * FROM ;

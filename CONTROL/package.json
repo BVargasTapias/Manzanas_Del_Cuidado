@@ -1,0 +1,27 @@
+{
+  "name": "manzanas_del_cuidado",
+  "version": "1.0.0",
+  "description": "Proyecto Manzanas del cuidado",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index",
+    "runnig": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BVargasTapias/Manzanas_Del_Cuidado.git"
+  },
+  "author": "Brian, Cecilia y Jenyfer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BVargasTapias/Manzanas_Del_Cuidado/issues"
+  },
+  "homepage": "https://github.com/BVargasTapias/Manzanas_Del_Cuidado#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.1.7"
+  }
+}
