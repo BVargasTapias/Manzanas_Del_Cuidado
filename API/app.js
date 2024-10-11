@@ -31,13 +31,12 @@ db.connect((err) => {
 app.post('/crear', (req,res)=>{
   console.log(req);
   
-  const {nombre, tipodedocumento, documento, manzana}=req.body
-  const nombreUsuario = req.body.nombre;
-  console.log(nombreUsuario);
+  const {nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion}=req.body
   
-  console.log(nombre, tipodedocumento, documento, manzana);
-  const jhon = `INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad) VALUES (?,?,?,?)`
-  db.query (jhon,[nombre, tipodedocumento, documento, manzana],(err,result)=>{
+  
+  console.log(nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion);
+  const jhon = `INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion) VALUES (?,?,?,?,?,?,?,?)`
+  db.query (jhon,[nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion],(err,result)=>{
     if(err){
       console.error(err);
       res.status(500).send("pailas")
