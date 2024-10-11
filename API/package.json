@@ -4,7 +4,8 @@
   "description": "Proyecto Manzanas del cuidado",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,11 @@
   "dependencies": {
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "mysql2": "^3.11.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3"
+  },
+  "keywords": [],
+  "devDependencies": {
     "nodemon": "^3.1.7"
   }
 }

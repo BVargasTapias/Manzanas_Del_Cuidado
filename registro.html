@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="./CSS/styles.css">
 </head>
 
 <body>
 
-    <video src="../multimedia/clothingstore2-a-vid1.mp4" autoplay loop></video>
+
+    <video src="./multimedia/clothingstore2-a-vid1.mp4" autoplay loop></video>
 
 
 
@@ -20,35 +21,37 @@
             <h1>Registre sus datos</h1>
 
         </div>
-        <form action="" class="formulario">
+        <form action="http://localhost:3000/crear" class="formulario" method="post">
 
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
-
+    
             <label for="Tipo de Documento">Tipo de Documento</label>
             <select name="tipodedocumento" id="tipodedocumento" required>
-                <option value="">TI</option>
-                <option value="">CC</option>
+                <option value="TI">TI</option>
+                <option value="CC">CC</option>
             </select>
-
+    
             <label for="documento">Documento:</label>
             <input type="text" id="documento" name="documento" placeholder="Documento" required>
-
+    
             <label for="manzana">Manzana</label>
             <select name="manzana" id="manzana" required>
-                <option value="">Bosa</option>
-                <option value="">Suba</option>
-                <option value="">Chapinero</option>
+                <option value="Bosa">Bosa</option>
+                <option value="Suba">Suba</option>
+                <option value="Chapinero">Chapinero</option>
             </select>
+    
+            <button type="submit" id="enviar">ENVIAR</button>
+            <a link rel="stylesheet" href="index.html" class="btn">Atras</a>
         </form>
-        <button type="submit" id="enviar">ENVIAR</button>
-        <a link rel="stylesheet" href="index.html" class="btn">Atras</a>
-
+       
     </div>
 
     
 
-    </form>
+
+
 </body>
 
 </html>
