@@ -1,0 +1,19 @@
+{
+  "name": "manzanas_del_cuidado",
+  "version": "1.0.0",
+  "description": "Proyecto Manzanas del cuidado",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BVargasTapias/Manzanas_Del_Cuidado.git"
+  },
+  "author": "Brian, Cecilia y Jenyfer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BVargasTapias/Manzanas_Del_Cuidado/issues"
+  },
+  "homepage": "https://github.com/BVargasTapias/Manzanas_Del_Cuidado#readme"
+}

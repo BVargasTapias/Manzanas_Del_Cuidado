@@ -1,11 +1,11 @@
-// Se crea la base de datos.
+DROP DATABASE bbdd_Manzanas_Del_Cuidado;
 
 CREATE DATABASE BBDD_Manzanas_Del_Cuidado
     DEFAULT CHARACTER SET = 'utf8mb4';
 
     USE BBDD_Manzanas_Del_Cuidado;
 
-// Se crea la tabla de Manzanas.
+--Se crea la tabla de Manzanas.
 
 CREATE TABLE Manzanas (
     ID_Manzanas INT AUTO_INCREMENT PRIMARY KEY,
@@ -14,7 +14,7 @@ CREATE TABLE Manzanas (
     Man_Direccion VARCHAR (20)
 )
 
-// Se crea la tabla de Servicios.
+--Se crea la tabla de Servicios.
 
 CREATE TABLE Servicios (
     ID_Servicios INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,7 +22,7 @@ CREATE TABLE Servicios (
     Ser_Descripcion VARCHAR (20)
 )
 
-// Se crea tabla intermedia de Manzanas y Servicios.
+--Se crea tabla intermedia de Manzanas y Servicios.
 
 CREATE TABLE Servicios_Manzanas (
     FK_ID_Servicios INT (10),
@@ -31,11 +31,11 @@ CREATE TABLE Servicios_Manzanas (
     FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas(ID_Manzanas)
 )
 
-// Se crea Tabla de Usuario con llave foranea.
  
+
 CREATE TABLE Usuario (
     ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
-    Usu_TipoDocumento VARCHAR (10),
+    Usu_TipoDocumento SET ('Cedula de Ciudadania', 'Tarjeta de Identidad'),
     Usu_NumeroDocumento INT (10),
     Usu_NombreCompleto VARCHAR (20),
     Usu_Telefono INT (10),
@@ -47,7 +47,7 @@ CREATE TABLE Usuario (
     FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas)
 )
 
-// Se crea tabla Solicitudes con llave foranea.
+-- Se crea tabla Solicitudes con llave foranea.
 
 CREATE TABLE Solicitudes (
     ID_Solicitudes INT AUTO_INCREMENT PRIMARY KEY,
