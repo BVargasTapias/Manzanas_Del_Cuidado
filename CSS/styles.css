@@ -8,6 +8,10 @@
     font-style: normal;
 }
 
+body{
+    background: rgb(161, 102, 201);
+}
+
 video {
     width: 100%;
     left: 0;
@@ -26,33 +30,45 @@ header {
 }
 
 .container2 {
-    width: 300px;
+    width: 500px;
     margin: 0 auto;
-    margin-top: 23%;
-  
-  
-}
-
-.sin-linea {
-    text-decoration: none;
-    
+    margin-top: 15%;
+   
 }
 
 
 .container1 {
-    width: 3000px;
-    margin: 0 auto;
-    font-size: 30px;
-    margin-left: 80%;
-    margin-top: 2%;
-   
 
+   justify-content: space-between;
+    align-items: center;
+    font-size: 33px;
+    margin-left: 75%;
+    margin-top: 25px;
+
+   
+}
+
+.sin-linea {
+    text-decoration: none;
+
+    
+}
+
+#inicio:hover{
+    background: #c3ace7;
+    opacity: 0.5;
+}
+
+#registro:hover{
+    background: #e6def3;
+    opacity: 0.5;
 }
 
 #logo {
     width: 75px;
-    height: 70px;
-    margin-top: 1%;
+    height: 85px;
+    margin-top: 2px;
+    margin-left: 20px;
 
 }
 
@@ -89,13 +105,21 @@ p {
 .formulario {
     display: flex;
     flex-direction: column;
+    
 }
 
 label {
     margin-bottom: 5px;
     font-weight: bold;
 }
-
+select,
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
 select,
 input[type="number"] {
     padding: 10px;
@@ -134,5 +158,10 @@ button {
 }
 
 button:hover {
+    opacity: 0.8;
+   
+}
+
+.btn:hover {
     opacity: 0.8;
 }

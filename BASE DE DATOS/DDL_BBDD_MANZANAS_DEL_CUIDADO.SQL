@@ -1,4 +1,5 @@
-DROP DATABASE bbdd_Manzanas_Del_Cuidado;
+
+DROP DATABASE bbdd_Manzanas_Del_Cuidado;  
 
 CREATE DATABASE BBDD_Manzanas_Del_Cuidado
     DEFAULT CHARACTER SET = 'utf8mb4';
