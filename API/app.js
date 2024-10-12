@@ -30,13 +30,22 @@ app.post('/crear', async (req, res) => {
   try {
     //Verificar el usuario
     const [ver] = await db.query(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
-   
-    
+
+
     if (ver.length > 0) {
-      console.log(ver);
+
       res.status(409).send(`<script>
         window.onload = function(){
             alert("Usuario ya existe")
+            window.location.href = './inicio.html'
+        }
+    </script>`)
+    }
+    else {
+      await db.query('INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion) VALUES (?,?,?,?,?,?,?,?)', [nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion])
+      res.status(201).send(`<script>
+        window.onload = function(){
+            alert("Datos guardados")
             window.location.href = './inicio.html'
         }
     </script>`)
@@ -46,6 +55,40 @@ app.post('/crear', async (req, res) => {
     console.error("Error en el servidor:", error);
     res.status(500).send("Error en el servidor")
   }
+})
+  //Iniciar sesion
+  app.post('/sesion', async (req, res) => {
+    const { tipodedocumento, documento } = req.body
+    try {
+      const [ingreso] = await db.query(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [ documento, tipodedocumento])
+
+
+
+      if (ingreso.length > 0) {
+  
+        res.status(409).send(`<script>
+          window.onload = function(){
+              alert("Usuario ya existe")
+          }
+      </script>`)
+      }
+      else {
+        await db.query(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
+        res.status(201).send(`<script>
+        window.onload = function(){
+            alert("Usuario no existe")
+            window.location.href = './registro.html'
+        }
+    </script>`)
+      }
+    }
+    catch (error) {
+      console.error("Error en el servidor:", error);
+      res.status(500).send("Error en el servidor")
+    }
+
+  })
+
   /* const jhon = `INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion) VALUES (?,?,?,?,?,?,?,?)`
   db.query(jhon, [nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion], (err, result) => {
     if (err) {
@@ -55,7 +98,7 @@ app.post('/crear', async (req, res) => {
     }
     console.log("Szs")
   }) */
-})
+
 
 //Apertura del servidor
 app.listen(3000, () => {
