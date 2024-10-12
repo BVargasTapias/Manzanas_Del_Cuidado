@@ -11,3 +11,4 @@ INSERT INTO Manzanas (Man_Nombre, Man_Direccion) VALUES
 ('Bosa', 'Calle Falsa 123'),
 ('Suba', 'Avenida Principal 456'),
 ('Chapinero', 'Boulevard de la Paz 789');
+

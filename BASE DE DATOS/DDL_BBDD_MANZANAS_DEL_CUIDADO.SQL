@@ -18,8 +18,8 @@ CREATE TABLE Manzanas (
 
 CREATE TABLE Servicios (
     ID_Servicios INT AUTO_INCREMENT PRIMARY KEY,
-    Ser_Nombre VARCHAR (20),
-    Ser_Descripcion VARCHAR (20)
+    Ser_Nombre VARCHAR (30),
+    Ser_Descripcion VARCHAR (50)
 )
 
 --Se crea tabla intermedia de Manzanas y Servicios.
@@ -57,3 +57,6 @@ CREATE TABLE Solicitudes (
     FOREIGN KEY (FK_ID_Usuario) REFERENCES Usuario (ID_Usuario)
 )
 
+ALTER TABLE Usuario ADD UNIQUE (Usu_NumeroDocumento)
+
+SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?
