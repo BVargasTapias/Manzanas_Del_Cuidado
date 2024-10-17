@@ -105,6 +105,12 @@
                     submenu.style.display = 'none';
                 });
 
+                //Desmarcar todas las casillas de verificacion al cambiar el servicio
+                const checkboxes = document.querySelectorAll('.submenu input[type="checkbox"]');
+                checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false; // Desmarcar cada checkbox
+                 });
+
                 // Mostrar el submenú correspondiente al valor seleccionado
                 const selectedValue = this.value;
                 const submenuToShow = document.getElementById(`submenu-${selectedValue}`);
