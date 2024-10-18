@@ -40,7 +40,7 @@ CREATE TABLE Usuario (
     Usu_NombreCompleto VARCHAR (50),
     Usu_Telefono VARCHAR (10),
     Usu_CorreoElectronico VARCHAR (40),
-    Usu_Ciudad VARCHAR (20),
+    Usu_Manzana SET ('Bosa','Chapinero','Suba'),
     Usu_Direccion VARCHAR (20),
     Usu_Ocupacion VARCHAR (30),
     FK_ID_Manzanas INT (10),
@@ -59,4 +59,8 @@ CREATE TABLE Solicitudes (
 
 ALTER TABLE Usuario ADD UNIQUE (Usu_NumeroDocumento)
 
-SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?
+SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=? 
+
+SELECT manzanas.Use_NombreCompleto FROM usuario 
+INNER JOIN manzanas ON usuario.ID_Manzanas=ID_Manzanas 
+WHERE usuario.Usu_NombreCompleto=?
