@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANZANA DEL CUIDADO</title>
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <script src="./js/jquery.easing.1.3.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+
+
+</head>
+
+<body>
+    <video src="./multimedia/clothingstore2-a-vid1.mp4" autoplay loop></video>
+
+
+    <div class="container">
+        <div class="titulo">
+            <h1>solicite sus servicios</h1>
+
+        </div>
+
+
+        <form action="" class="formulario" method="get">
+
+            <label for="servicios">Consultar servicios</label>
+            <select name="servicios" id="servicios" required>
+                <option value="limpieza">Limpieza</option>
+                <option value="jardineria">Jardinería</option>
+                <option value="transporte">Transporte</option>  
+                <option value="plomeria">Plomería</option>
+                <option value="electricidad">Electricidad</option>
+                <option value="pintura">Pintura</option>
+                <option value="mantenimiento">Mantenimiento</option>
+            </select>
+
+        <!-- btn de servicios guardados en el container -->
+
+            <button id="btnserviciosguardados">Menu de servicios </button>
+
+            <!-- Servivios-guardados en el container     -->
+
+            <div id="servicios-guardados" style="display: none;">
+                <h2>Servicios Guardados</h2>
+                <table id="tabla">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Servicio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista"></tbody>
+
+                </table>
+            </div>
+
+
+
+
+        </form>
+
+        <!-- Botón para cerrar sesión -->
+
+        <button id="btncerrarsesion">Cerrar Sesión </button>
+
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                //obtener el nombre del usuario
+
+                const xhrNombreUsuario = new XMLHttpRequest()
+                xhrNombreUsuario.open('get', '/obtener-usuario', true)
+                xhrNombreUsuario.onreadystatechange = function () {
+                    if (xhrNombreUsuario.readyState === 4) {
+                        if (xhrNombreUsuario.status === 200) {
+                            const usuario = JSON.parse(xhrNombreUsuario.responseText)
+                            document.getElementById('Usu_NombreCompleto').textContent = usuario
+                        }
+                        else {
+                            console.error('No se pudo poner el usario')
+                        }
+                    }
+                }
+                xhrNombreUsuario.send()
+            })
+        </script>
+
+
+</body>
+
+</html>
