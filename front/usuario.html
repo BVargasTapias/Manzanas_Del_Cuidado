@@ -18,86 +18,45 @@
 
     <div class="container">
         <div class="titulo">
-            <h1>solicite sus servicios</h1>
+            <h1>Bienvenidos,<span id="nombreUsuario"></span></h1>
 
         </div>
+        <form action="/obtener-usuario'" method="post">
+
+            <!-- btn de desplegar servicios -->
+
+            <button id="btndesplegarservicios">Menu de servicios </button>
 
 
-        <form action="" class="formulario" method="post">
+            <!-- btn de servicios guardados en el container -->
 
-            <label for="servicios">Consultar servicios</label>
-            <select name="servicios" id="servicios" required>
-                <option value="limpieza">Limpieza</option>
-                <option value="jardineria">Jardinería</option>
-                <option value="transporte">Transporte</option>  
-                <option value="plomeria">Plomería</option>
-                <option value="electricidad">Electricidad</option>
-                <option value="pintura">Pintura</option>
-                <option value="mantenimiento">Mantenimiento</option>
-            </select>
+            <button id="btnserviciosguardados">Servicios Guardados </button>
 
 
-            <label for="">descripcion de servicios</label>
-            <select name="descripcion" id="descripcion" required>
-                <option value="limpieza">servicio de limpieza</option>
-                <option value="jardineria">Cuidado de jardines </option>
-                <option value="transporte">Servicios de mudanza</option>
-                <option value="plomeria">Reparaciones de fontaneria</option>
-                <option value="electricidad">Servicios eléctricos</option>
-                <option value="pintura">Pintura de interiores</option>
-                <option value="mantenimiento">Servicios de mantenimiento</option>
-            </select>
+            <!-- Botón para cerrar sesión -->
 
-        <!-- btn de servicios guardados en el container -->
-
-            <button id="btnserviciosguardados">Menu de servicios </button>
-
-            <!-- Servivios-guardados en el container     -->
-
-            <div id="servicios-guardados" style="display: none;">
-                <h2>Servicios Guardados</h2>
-                <table id="tabla">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Servicio</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista"></tbody>
-
-                </table>
-            </div>
-
-
-
+            <button id="btncerrarsesion">Cerrar Sesión </button>
 
         </form>
 
-        <!-- Botón para cerrar sesión -->
-
-        <button id="btncerrarsesion">Cerrar Sesión </button>
-
-
-
         <script>
+            //obtener el nombre del usuario
             document.addEventListener('DOMContentLoaded', () => {
 
-                //obtener el nombre del usuario
-
-                const xhrNombreUsuario = new XMLHttpRequest()
-                xhrNombreUsuario.open('get', '/obtener-usuario', true)
+                const xhrNombreUsuario = new XMLHttpRequest();
+                xhrNombreUsuario.open('post', '/obtener-usuario', true);
                 xhrNombreUsuario.onreadystatechange = function () {
                     if (xhrNombreUsuario.readyState === 4) {
                         if (xhrNombreUsuario.status === 200) {
-                            const usuario = JSON.parse(xhrNombreUsuario.responseText)
-                            document.getElementById('Usu_NombreCompleto').textContent = usuario
+                            const usuario = JSON.parse(xhrNombreUsuario.responseText);
+                            document.getElementById('nombreUsuario').textContent = `${usuario.Usu_NombreCompleto}`;
                         }
                         else {
-                            console.error('No se pudo poner el usario')
+                            console.error('No se pudo poner el usario');
                         }
                     }
                 }
-                xhrNombreUsuario.send()
+                xhrNombreUsuario.send();
             })
         </script>
 

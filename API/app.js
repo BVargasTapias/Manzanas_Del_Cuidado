@@ -22,7 +22,7 @@ app.use(session({
 }))
 
 //Conexion bbdd
-const db ={
+const db = {
   host: "localhost",
   user: "root",
   password: "",
@@ -32,11 +32,11 @@ const db ={
 
 //Registrar usuario
 app.post('/crear', async (req, res) => {
- 
+
   const { nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion } = req.body
   try {
     //Verificar el usuario
-    const conect= await mysql2.createConnection(db)
+    const conect = await mysql2.createConnection(db)
     const [ver] = await conect.execute(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
 
 
@@ -50,7 +50,7 @@ app.post('/crear', async (req, res) => {
     </script>`)
     }
     else {
-      await conect.execute('INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion,FK_ID_Manzanas) VALUES (?,?,?,?,?,?,?,?)', [nombre, tipodedocumento, documento,  telefono, correo, direccion, ocupacion, manzana])
+      await conect.execute('INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion,FK_ID_Manzanas) VALUES (?,?,?,?,?,?,?,?)', [nombre, tipodedocumento, documento, telefono, correo, direccion, ocupacion, manzana])
       res.status(201).send(`<script>
         window.onload = function(){
             alert("Datos guardados")
@@ -67,40 +67,6 @@ app.post('/crear', async (req, res) => {
   }
 
 })
-//Iniciar sesion
- app.post('/sesion', async (req, res) => {
-  const { tipodedocumento, documento } = req.body
-  try {
-    const conect=await mysql2.createConnection(db)
-    const [ingreso] = await conect.execute (`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
-
-
-
-    if (ingreso.length > 0) {
-
-      res.status(409).send(`<script>
-          window.onload = function(){
-              window.location.href = './usuario.html'
-          }
-      </script>`)
-    }
-    else {
-      await conect.execute(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
-      res.status(201).send(`<script>
-        window.onload = function(){
-            alert("Usuario no existe")
-            window.location.href = './registro.html'
-        }
-    </script>`)
-    }
-  }
-  catch (error) {
-    console.error("Error en el servidor:", error);
-    res.status(500).send("Error en el servidor")
-  }
-
-}) 
-
 /* const jhon = `INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion) VALUES (?,?,?,?,?,?,?,?)`
 db.query(jhon, [nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion], (err, result) => {
   if (err) {
@@ -111,46 +77,52 @@ db.query(jhon, [nombre, tipodedocumento, documento, manzana, telefono, correo, d
   console.log("Szs")
 }) */
 
-  //Enviar pagina de usuario
+//Enviar pagina de usuario
 
-  app.post('/inicio',async(req,res)=>{
-    const{
-      documento, tipodedocumento}=req.body
-    try {
-      const conect=await mysql2.createConnection(db)
-      const [datos]= await conect.execute(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
-      console.log(datos)
-      if (datos.length>0){
-        const [manzana]= conect.execute('SELECT manzanas.Man_Nombre FROM usuario INNER JOIN manzanas ON usuario.ID_Manzanas=ID_Manzanas  WHERE usuario.Usu_NombreCompleto=?',[datos[0].Usu_NombreCompleto]);
-       req.session.usuario=datos[0].Use_NombreCompleto
-       req.session.Documento=Usu_NumeroDocumento
-       const usuario={nombre:datos[0].Use_NombreCompleto}
-       res.locals.usuario=usuario
-       res.locals.Documento=Usu_NumeroDocumento
-        res.sendFile(path.join(__dirname,'experiencia.html'))
-        await conect.end()
-      }
-     else{
-      res.status(401).send('Error')
-     }
-     await conect.end()
+app.post('/sesion', async (req, res) => {
+  const {
+    documento, tipodedocumento } = req.body
+  try {
+    const conect = await mysql2.createConnection(db)
+    const [datos] = await conect.execute(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
+    console.log(datos)
+    if (datos.length > 0) {
+      //const [manzana] = conect.execute('SELECT manzanas.Man_Nombre FROM usuario INNER JOIN manzanas ON usuario.ID_Manzanas=manzanas  WHERE usuario.Usu_NombreCompleto=?', [datos[0].Usu_NombreCompleto]);
+      req.session.usuario = datos[0].Usu_NombreCompleto
+      req.session.Documento = documento
+      const usuario = { nombre: datos[0].Usu_NombreCompleto }
+      res.locals.usuario = usuario
+      res.locals.Documento = documento
+      res.sendFile(path.join(__dirname, '../front/usuario.html'))
+      await conect.end()
     }
-    catch (error) {
-      console.error("Error en el servidor:", error);
-      res.status(500).send("Error en el servidor")
+    else {
+      await conect.execute(`SELECT * FROM Usuario WHERE Usu_NumeroDocumento=? AND Usu_TipoDocumento=?`, [documento, tipodedocumento])
+      res.status(201).send(`<script>
+        window.onload = function(){
+            alert("Usuario no existe")
+            window.location.href = './registro.html'
+        }
+    </script>`)
     }
-  })
+    await conect.end()
+  }
+  catch (error) {
+    console.error("Error en el servidor:", error);
+    res.status(500).send("Error en el servidor")
+  }
+})
 
-  app.post('/obtener-usuario',(req,res)=>{
-    const usuario=req.session.usuario
-    if(usuario){
-res.json({Usu_NumeroDocumento:usuario})
-    }
-    else{
-      res.status(401).send('Usuario no autenticado')
-    }
-  })
- 
+app.post('/obtener-usuario', (req, res) => {
+  const usuario = req.session.usuario
+  if (usuario) {
+    res.json({ Usu_NombreCompleto: usuario })
+    console.log(usuario)
+  }
+  else {
+    res.status(401).send('Usuario no autenticado')
+  }
+})
 
 
 //Apertura del servidor
