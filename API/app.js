@@ -80,7 +80,7 @@ app.post('/crear', async (req, res) => {
 
       res.status(409).send(`<script>
           window.onload = function(){
-              alert("Usuario ya existe")
+              window.location.href = './usuario.html'
           }
       </script>`)
     }
@@ -111,7 +111,8 @@ db.query(jhon, [nombre, tipodedocumento, documento, manzana, telefono, correo, d
   console.log("Szs")
 }) */
 
-  //Enviar pagina de experiencia
+  //Enviar pagina de usuario
+
   app.post('/inicio',async(req,res)=>{
     const{
       documento, tipodedocumento}=req.body
