@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const mysql2 = require("mysql2/promise");
 const path = require('path');
 const moment = require('moment');
-const session = require('express-session')
+const session = require('express-session');
+const { Console } = require("console");
 
 const app = express();
 
@@ -67,15 +68,6 @@ app.post('/crear', async (req, res) => {
   }
 
 })
-/* const jhon = `INSERT INTO Usuario (Usu_NombreCompleto, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_Ciudad, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion) VALUES (?,?,?,?,?,?,?,?)`
-db.query(jhon, [nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion], (err, result) => {
-  if (err) {
-    console.error(err);
-    res.status(500).send("pailas")
-    return
-  }
-  console.log("Szs")
-}) */
 
 //Enviar pagina de usuario
 
@@ -113,7 +105,7 @@ app.post('/sesion', async (req, res) => {
   }
 })
 
-app.post('/obtener-usuario', (req, res) => {
+app.get('/obtener-usuario', (req, res) => {
   const usuario = req.session.usuario
   if (usuario) {
     res.json({ Usu_NombreCompleto: usuario })
@@ -124,8 +116,91 @@ app.post('/obtener-usuario', (req, res) => {
   }
 })
 
+//Ruta para obtener los servicios del usuario
+
+app.post('/obtener-servicios-usuario', async (req, res) => {
+  const usuario = req.session.usuario
+  try {
+    const conect = await mysql2.createConnection(db)
+    const [datos] = await conect.execute('SELECT servicios.Ser_Nombre FROM servicios INNER JOIN servicios_manzanas ON servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON manzanas.ID_Manzanas=servicios_manzanas.FK_ID_Manzanas INNER JOIN usuario ON manzanas.ID_Manzanas=usuario.FK_ID_Manzanas WHERE usuario.Usu_NombreCompleto=?', [usuario])
+    console.log(datos)
+    res.json({ servicios: datos.map(hijo => hijo.Ser_Nombre) })
+    await conect.end()
+  }
+
+  catch (error) {
+    console.error("Error en el servidor:", error);
+    res.status(500).send("Error en el servidor")
+  }
+})
+
+// Ruta para guardar los servicios seleccionados por el usuario
+
+app.post('/guardar-servicios-usuario', async (req, res) => {
+  const usuario = req.session.usuario
+  const Documento = req.session.Documento
+  const { servicios, fechaHora } = req.body
+  console.log(servicios)
+  console.log(Documento)
+  try {
+    const conect = await mysql2.createConnection(db)
+    const [IDS] = await conect.query('SELECT servicios.ID_Servicios FROM servicios WHERE servicios.Ser_Nombre=?', [servicios])
+    const [IDU] = await conect.execute('SELECT usuario.ID_Usuario FROM usuario WHERE usuario.Usu_NumeroDocumento=?', [Documento])
+    await conect.query('INSERT INTO solicitudes (Sol_FechaHora,FK_ID_Usuario ,Sol_Codigoserv) VALUES (?,?,?)', [fechaHora, IDU[0].ID_Usuario, IDS[0].ID_Servicios])
+    res.send().status(200)
+    await conect.end()
+  }
+
+  catch (error) {
+    console.error("Error en el servidor:", error)
+    res.status(500).send("Error en el servidor");
+  }
+})
+
+
+app.post('/obtener-servicios-guardados', async (req, res) => {
+  const usuario = req.session.usuario;
+  const Documento = req.session.Documento
+  try {
+    // Conectar a la base de datos y consultar los servicios guardados por el usuario
+    const conect = await mysql2.createConnection(db)
+    const [IDU] = await conect.execute('SELECT usuario.ID_Usuario FROM usuario WHERE usuario.Usu_NumeroDocumento=?', [Documento])
+    const [serviciosGuardadosData] = await conect.execute('SELECT servicios.Ser_Nombre, solicitudes.Sol_Fechahora, solicitudes.FK_ID_Solicitudes FROM servicios INNER JOIN servicios_manzanas ON servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON servicios_manzanas.FK_ID_Manzanas=manzanas.ID_Manzanas INNER JOIN usuario ON manzanas.ID_Manzanas=usuario.FK_ID_Manzanas INNWE JOIN solicitudes ON usuario.Id=solicitudes.ID1 WHERE solicitudes.ID1=? AND servicios.ID_Servicios=solicitudes.Sol_Codigoserv;', [IDU[0].Id]);
+
+    console.log(serviciosGuardadosData)
+    console.log(IDU[0].Id)
+    const serviciosGuardadosFiltrados = serviciosGuardadosData.map(servicio => ({
+      Nombre: servicio.Nombre,
+      Fecha: servicio.Fecha,
+      id: servicio.Id_solicitudes
+      //Agrega más propiedades si es necesario
+    }));
+    //Enviar los datos de los servidores guardados al cliente
+    res.json({ serviciosGuardados: serviciosGuardadosFiltrados
+    });
+    // Cerrar la conexión
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor')
+  }
+
+});
+
+app.delete('/eliminar-servicio/:id', async (req, res) => {
+  const servicioId = req.params.id;
+  const eliminarServicios=db[Id];
+
+  if (!account){
+    return res.status(404).json({error: "Servicio no Eliminado"});
+  }
+delete db [Id];
+return res.status(204).send('Servicios eliminado');
+})
+
 
 //Apertura del servidor
 app.listen(3000, () => {
   console.log(`Servidor Node.js escuchando`);
 })
+

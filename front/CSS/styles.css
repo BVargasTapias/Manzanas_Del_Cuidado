@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
-    font-family: "Roboto", sans-serif;
-    font-weight: 900;
+    font-family: "Merienda", cursive;
+    font-optical-sizing: auto;
+    font-weight: weight;
     font-style: normal;
 }
 
-body{
+body {
     background: rgb(161, 102, 201);
 }
 
@@ -26,40 +27,40 @@ header {
     position: relative;
     background-color: aliceblue;
     display: flex;
-    
+
 }
 
 .container2 {
     width: 500px;
     margin: 0 auto;
     margin-top: 15%;
-   
+
 }
 
 
 .container1 {
 
-   justify-content: space-between;
+    justify-content: space-between;
     align-items: center;
     font-size: 33px;
     margin-left: 75%;
     margin-top: 25px;
 
-   
+
 }
 
 .sin-linea {
     text-decoration: none;
 
-    
+
 }
 
-#inicio:hover{
+#inicio:hover {
     background: #c3ace7;
     opacity: 0.5;
 }
 
-#registro:hover{
+#registro:hover {
     background: #e6def3;
     opacity: 0.5;
 }
@@ -88,7 +89,7 @@ p {
 }
 
 .container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 100px auto;
     padding: 20px;
     background-color: rgba(148, 15, 189, 0.726);
@@ -105,13 +106,16 @@ p {
 .formulario {
     display: flex;
     flex-direction: column;
-    
+
 }
 
 label {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-weight: bold;
 }
+
+
+
 select,
 input[type="text"] {
     padding: 10px;
@@ -120,6 +124,7 @@ input[type="text"] {
     border-radius: 4px;
     font-size: 16px;
 }
+
 select,
 input[type="number"] {
     padding: 10px;
@@ -130,36 +135,40 @@ input[type="number"] {
 }
 
 button {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 60px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 #enviar {
     background-color: #4CAF50;
     color: white;
+
 }
 
 .btn {
     background-color: #f44336;
     color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 60px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
+
 }
 
 button:hover {
     opacity: 0.8;
-   
+
 }
 
 .btn:hover {
