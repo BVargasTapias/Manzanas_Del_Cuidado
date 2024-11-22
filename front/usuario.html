@@ -78,7 +78,7 @@
                     const serviciosContainer = document.getElementById('servicios-container')
                     const tablaServicios = document.getElementById('tabla-servicios');
                     const listaServicios = document.getElementById('lista-servicios');
-                    const btnDesplegarServicios = document.getElementById('btnDesplegarServicios')
+                    const btnDesplegarServicios = document.getElementById('btnserviciosguardados')
                     //Obtener el nombre del usuario
                     const xhrNombreUsuario = new XMLHttpRequest()
                     xhrNombreUsuario.open('GET', '/obtener-usuario', true)
@@ -107,7 +107,7 @@
                             if (xhrobtener.readyState === 4) {
                                 if (xhrobtener.status === 200) {
                                     const data = JSON.parse(xhrobtener.responseText)
-                                    listaServicios.innerHTML = ''
+                                    listaServicios.innerHTML = '';
                                     data.servicios.forEach(servicio => {
                                         const row = document.createElement('tr')
                                         row.innerHTML = `
@@ -173,14 +173,14 @@
                             if (xhrObtenerServiciosGuardados.readyState === 4) {
                                 if (xhrObtenerServiciosGuardados.status === 200) {
                                     const data = JSON.parse(xhrObtenerServiciosGuardados.responseText)
-                                    listaServiciosGuardados.innerHTML = ''
-                                    data.serviciosGuardados.map(servicio =>
-                                        `
+                                    listaServiciosGuardados.innerHTML =
+                                        data.serviciosGuardados.map(servicio =>
+                                            `
                                         <tr>
 
                                             <td>${servicio.Fecha}</td>
                                             <td>${servicio.Nombre}</td>
-                                            <td><button onclick="eliminarServicio(${servicio.Id})">Eliminar</button></td>
+                                            <td><button onclick="eliminarServicio(${servicio.id})">Eliminar</button></td>
                                             <!--Agrega más columnas si es necesario -->
                                         </tr >
                                     `).join('');
@@ -194,10 +194,62 @@
                         xhrObtenerServiciosGuardados.send();
                     })
 
-                })
-            
+                    const btnCerrarSesion = document.getElementById("btncerrarsesion");
 
-            
+                    btnCerrarSesion.addEventListener("click", async () => {
+                        try {
+                            const response = await fetch("/cerrar-sesion", {
+                                method: "POST",
+                            });
+
+                            if (response.ok) {
+                                alert("Sesión cerrada con éxito.");
+                                window.location.href = "./index.html";
+                            } else {
+                                alert("Error al cerrar la sesión. Intente de nuevo.");
+                            }
+                        } catch (error) {
+                            console.error("Error al cerrar la sesión:", error);
+                            alert("Ocurrió un error. Intente más tarde.");
+                        }
+
+                    });
+                    window.onload=function(){
+                        window.history.forward()
+                    }
+                    window.onpageshow=function(event){
+                        if(event.persisted){
+                            window.location.reload()
+                        }
+                    }
+
+
+                })
+                function eliminarServicio(id) {
+                    const xhrEliminarServicio = new XMLHttpRequest();
+                    xhrEliminarServicio.open(
+                        "delete",
+                        `/eliminar-servicio/${id}`,
+                        true
+                    );
+                    xhrEliminarServicio.setRequestHeader('Content-Type', 'application/json');
+                    xhrEliminarServicio.onreadystatechange = function () {
+                        if (
+                            xhrEliminarServicio.readyState === 4) {
+                            if (xhrEliminarServicio.status === 200) {
+                                alert("Solicitud Eliminada");
+                                window.location.reload();
+                            }
+
+                        } else {
+                            console.error("Error al eliminar solicitud");
+                        }
+                    };
+                    xhrEliminarServicio.send();
+                }
+
+
+
 
             </script>
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANZANA DEL CUIDADO</title>
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <script src="./js/eventos.js"></script>
+    <script src="./js/jquery.easing.1.3.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+    <video src="./multimedia/clothingstore2-a-vid1.mp4" autoplay loop></video>
+
+    <div class="container">
+        <div class="titulo">
+            <h1>Bienvenidos, <span id="nombreUsuario"></span></h1>
+        </div>
+
+        <form id="formularioPrincipal">
+
+            <!-- Botón para gestionar usuarios -->
+            <button id="btnUsuarios">Usuarios</button>
+
+            <div class="containerUsuarios" id="containerUsuarios" style="display: none;">
+                <h2>Gestión de Usuarios</h2>
+                <table class="form-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo Electrónico</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaUsuarios"></tbody>
+                </table>
+            </div>
+
+            <!-- Botón para gestionar servicios -->
+            <button id="btnServicios">Servicios</button>
+
+            <div class="containerServicios" id="containerServicios" style="display: none;">
+                <h2>Gestión de Servicios</h2>
+                <table class="form-table">
+                    <tr>
+                        <td id="tablaServicios">Tabla de Servicios</td>
+                    </tr>
+                    <tr>
+                        <td id="listaServicios">Lista de Servicios</td>
+                    </tr>
+                </table>
+                <input type="date" id="fecha_hora">
+                <button type="submit" id="guardarServicios">Guardar Servicios</button>
+            </div>
+
+            <!-- Botón para crear manzana -->
+            <button id="btnCrearManzana">Crear Manzana</button>
+
+            <div id="crearManzanaContainer" style="display: none;">
+                <h2>Crear Manzana</h2>
+                <form id="formularioCrearManzana">
+                    <label for="nombreManzana">Nombre de la Manzana:</label>
+                    <input type="text" id="nombreManzana" required>
+
+                    <label for="ubicacion">Ubicación:</label>
+                    <input type="text" id="ubicacion" required>
+
+                    <button type="submit" id="guardarManzana">Guardar Manzana</button>
+                </form>
+            </div>
+
+            <!-- Botón para cerrar sesión -->
+            <button id="btnCerrarSesion">Cerrar Sesión</button>
+
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const xhrNombreUsuario = new XMLHttpRequest()
+            xhrNombreUsuario.open('GET', '/obtener-usuario', true)
+            xhrNombreUsuario.onreadystatechange = function () {
+                if (xhrNombreUsuario.readyState === 4) {
+                    if (xhrNombreUsuario.status === 200) {
+                        const usuario = JSON.parse(xhrNombreUsuario.responseText)
+                        document.getElementById('nombreUsuario').textContent = usuario.Usu_NombreCompleto
+                        console.log(usuario)
+                    }
+                    else {
+                        console.error('No se pudo poner el usuario')
+                    }
+                }
+            }
+
+
+            xhrNombreUsuario.send()
+        })
+    </script>
+</body>
+
+</html>

@@ -8,16 +8,18 @@ USE BBDD_Manzanas_Del_Cuidado;
 
 CREATE TABLE Manzanas (
     ID_Manzanas INT AUTO_INCREMENT PRIMARY KEY,
-    Man_Nombre SET('Bosa', 'Suba', 'Chapinero'),
+    Man_Nombre VARCHAR(20),
     Man_Direccion VARCHAR(20)
-)
+);
+
 --Se crea la tabla de Servicios.
 
 CREATE TABLE Servicios (
     ID_Servicios INT AUTO_INCREMENT PRIMARY KEY,
     Ser_Nombre VARCHAR(30),
     Ser_Descripcion VARCHAR(50)
-)
+);
+
 --Se crea tabla intermedia de Manzanas y Servicios.
 
 CREATE TABLE Servicios_Manzanas (
@@ -36,12 +38,12 @@ CREATE TABLE Usuario (
     Usu_NombreCompleto VARCHAR(50),
     Usu_Telefono VARCHAR(10),
     Usu_CorreoElectronico VARCHAR(40),
-    Usu_Manzana SET('Bosa', 'Chapinero', 'Suba'),
     Usu_Direccion VARCHAR(20),
     Usu_Ocupacion VARCHAR(30),
     FK_ID_Manzanas INT(10),
     FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas)
-)
+);
+
 -- Se crea tabla Solicitudes con llave foranea.
 
 CREATE TABLE Solicitudes (
