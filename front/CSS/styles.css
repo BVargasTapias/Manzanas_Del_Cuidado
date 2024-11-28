@@ -30,13 +30,13 @@ header {
 
 }
 
-.container2 {
-    width: 500px;
-    margin: 0 auto;
-    margin-top: 15%;
+#logo {
+    width: 75px;
+    height: 85px;
+    margin-top: 2px;
+    margin-left: 50px;
 
 }
-
 
 .container1 {
 
@@ -46,32 +46,53 @@ header {
     margin-left: 75%;
     margin-top: 25px;
 
-
 }
+
+#inicio {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #8e44ad, #34dbc5);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+
+#registro {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #8e44ad, #34dbc5);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
 
 .sin-linea {
     text-decoration: none;
 
-
 }
 
 #inicio:hover {
-    background: #c3ace7;
-    opacity: 0.5;
+    background: linear-gradient(to right, #34dbc5, #8e44ad);
 }
 
 #registro:hover {
-    background: #e6def3;
-    opacity: 0.5;
+    background: linear-gradient(to right, #34dbc5, #8e44ad);
 }
 
-#logo {
-    width: 75px;
-    height: 85px;
-    margin-top: 2px;
-    margin-left: 20px;
 
+.container2 {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 15%;
+    font-size: 50%;
 }
+
 
 #fondo1 {
     width: 450px;
@@ -85,13 +106,13 @@ header {
 
 p {
     color: white;
-    font-size: 45px;
+    font-size: 60px;
 }
 
 .container {
     max-width: 500px;
     margin: 100px auto;
-    padding: 20px;
+    padding: 6px;
     background-color: rgba(148, 15, 189, 0.726);
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -112,9 +133,8 @@ p {
 label {
     margin-bottom: 10px;
     font-weight: bold;
+
 }
-
-
 
 select,
 input[type="text"] {
@@ -135,34 +155,28 @@ input[type="number"] {
 }
 
 button {
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-right: 5px;
-    padding-left: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
-}
-
-#enviar {
-    background-color: #4CAF50;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #613175, #34db66);
     color: white;
-
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
 }
+
 
 .btn {
-    background-color: #f44336;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #e93434, #863058);
     color: white;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-right: 5px;
-    padding-left: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
     text-decoration: none;
+    text-align: center;
 
 }
 
@@ -177,4 +191,104 @@ button:hover {
 
 p {
     font-size: 16px;
+}
+
+#btnUsuarios {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#btnServicios {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#btnCrearManzana{
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+
+}
+
+#btncerrarsesion{
+    padding: 10px 20px;
+    background: linear-gradient(to right, #e93434, #863058);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#fechahora {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #cfbaf0;
+}
+
+#btnserviciosguardados{
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+
+}
+
+#guarserv{
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#btnDesplegarServiciosGuardados{
+
+    padding: 10px 20px;
+    background: linear-gradient(to right, #48dbb7, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 10%;
 }
