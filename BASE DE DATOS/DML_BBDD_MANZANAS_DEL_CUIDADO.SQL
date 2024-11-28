@@ -1,3 +1,4 @@
+-- Active: 1732315454964@@127.0.0.1@3306@bbdd_manzanas_del_cuidado
 INSERT INTO Servicios
     (Ser_Nombre, Ser_Descripcion)
 VALUES
@@ -47,8 +48,6 @@ servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON
  manzanas.ID_Manzanas=usuario.FK_ID_Manzanas
 WHERE usuario.Usu_NombreCompleto="brian";
 
-SELECTSELECT servicios.ID_Servicios FROM servicios INNER JOIN servicios_manzanas ON servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON manzanas.ID_Manzanas=servicios_manzanas.FK_ID_Manzanas INNER JOIN usuario ON manzanas.ID_Manzanas=usuario.FK_ID_Manzanas WHERE usuario.FK_ID_Manzanas;
-
 -- Insertar un Administrador
 INSERT INTO Usuario (Usu_TipoUsuario, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_NombreCompleto, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion, FK_ID_Manzanas)
 VALUES ('Administrador', 'CC', 1234567890, 'Carlos Pérez', '3001234567', 'carlos.perez@example.com', 'Calle 10 #20-30', 'Ingeniero', 1);
@@ -67,7 +66,7 @@ VALUES ('Usuario', 'TI', 2233445566, 'Laura Martínez', '3107654321', 'laura.mar
 
 -- Insertar un usuario sin tipo definido
 INSERT INTO Usuario (Usu_TipoUsuario, Usu_TipoDocumento, Usu_NumeroDocumento, Usu_NombreCompleto, Usu_Telefono, Usu_CorreoElectronico, Usu_Direccion, Usu_Ocupacion, FK_ID_Manzanas)
-VALUES (NULL, 'CC', 3344556677, 'Pedro Ramírez', '3201234567', 'pedro.ramirez@example.com', 'Carrera 50 #20-25', 'Comerciante', 5);
+VALUES ('Administrador', 'CC', 3344556677, 'Pedro Ramírez', '3201234567', 'pedro.ramirez@example.com', 'Carrera 50 #20-25', 'Comerciante', 5);
 
 
 INSERT INTO Manzanas

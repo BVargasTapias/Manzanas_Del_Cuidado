@@ -81,7 +81,7 @@
                     const btnDesplegarServicios = document.getElementById('btnserviciosguardados')
                     //Obtener el nombre del usuario
                     const xhrNombreUsuario = new XMLHttpRequest()
-                    xhrNombreUsuario.open('GET', '/obtener-usuario', true)
+                    xhrNombreUsuario.open('post', '/obtener-usuario', true)
                     xhrNombreUsuario.onreadystatechange = function () {
                         if (xhrNombreUsuario.readyState === 4) {
                             if (xhrNombreUsuario.status === 200) {
@@ -214,11 +214,11 @@
                         }
 
                     });
-                    window.onload=function(){
+                    window.onload = function () {
                         window.history.forward()
                     }
-                    window.onpageshow=function(event){
-                        if(event.persisted){
+                    window.onpageshow = function (event) {
+                        if (event.persisted) {
                             window.location.reload()
                         }
                     }

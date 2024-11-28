@@ -1,3 +1,4 @@
+-- Active: 1732315454964@@127.0.0.1@3306@bbdd_manzanas_del_cuidado
 DROP DATABASE bbdd_Manzanas_Del_Cuidado;
 
 CREATE DATABASE BBDD_Manzanas_Del_Cuidado DEFAULT CHARACTER SET = 'utf8mb4';
@@ -11,6 +12,7 @@ CREATE TABLE Manzanas (
     Man_Nombre VARCHAR(20),
     Man_Direccion VARCHAR(20)
 );
+
 
 --Se crea la tabla de Servicios.
 
@@ -26,7 +28,7 @@ CREATE TABLE Servicios_Manzanas (
     FK_ID_Servicios INT(10),
     FK_ID_Manzanas INT(10),
     fechaHora DATETIME,
-    FOREIGN KEY (FK_ID_Servicios) REFERENCES Servicios (ID_Servicios),
+    FOREIGN KEY (FK_ID_Servicios) REFERENCES Servicios (ID_Servicios) ON DELETE CASCADE,
     FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas)
 )
 
@@ -57,14 +59,9 @@ CREATE TABLE Solicitudes (
 ALTER TABLE Usuario ADD UNIQUE (Usu_NumeroDocumento);
 
 
-SELECT *
-FROM Usuario
-WHERE
-    Usu_NumeroDocumento = ?
-    AND Usu_TipoDocumento = ?
+SELECT * FROM manzanas ;
+SELECT manzanas.Use_NombreCompleto FROM usuario INNER JOIN manzanas ON usuario.ID_Manzanas = manzanas.ID_Manzanas WHERE usuario.Usu_NombreCompleto = ?;
 
-SELECT manzanas.Use_NombreCompleto
-FROM usuario
-    INNER JOIN manzanas ON usuario.ID_Manzanas = ID_Manzanas
-WHERE
-    usuario.Usu_NombreCompleto = ?
+SELECT servicios.ID_Servicios FROM servicios WHERE servicios.Ser_Nombre = "electricidad"
+
+SELECT ID_Manzanas, Man_Nombre FROM manzanas

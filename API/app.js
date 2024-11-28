@@ -32,6 +32,7 @@ const db = {
 
 
 //Registrar usuario
+
 app.post('/crear', async (req, res) => {
 
   const { nombre, tipodedocumento, documento, manzana, telefono, correo, direccion, ocupacion } = req.body
@@ -121,7 +122,7 @@ app.post('/sesion', async (req, res) => {
   }
 })
 
-app.get('/obtener-usuario', (req, res) => {
+app.post('/obtener-usuario', (req, res) => {
   const usuario = req.session.usuario
   if (usuario) {
     res.json({ Usu_NombreCompleto: usuario })
@@ -243,9 +244,204 @@ app.delete('/eliminar-servicio/:id', async (req, res) => {
   }
 })
 
- 
+// ADMINISTRADOR
+
+//Obtener Usuarios
+app.get('/usuarios', async (req, res) => {
+  const usuario = req.session.usuario;
+
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [usuariosData] = await conect.execute('SELECT * FROM Usuario');
+    const usuariosGuardadosFiltrados = usuariosData.map(usuario => ({
+      Nombre: usuario.Usu_NombreCompleto,
+      IDU: usuario.ID_Usuario
+    }));
+    res.json({ usuariosGuardados: usuariosGuardadosFiltrados });
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+
+//Modificar Usuario
+app.get('/modificar-usuario/:IDU', async (req, res) => {
+  const solicitudID = req.params.IDU;
+
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [modificarData] = await conect.execute(
+      'SELECT * FROM Usuario WHERE ID_Usuario = ?',
+      [solicitudID]
+    );
+    console.log(modificarData);
+    
+    const [manzanaName] = await conect.execute(
+      'SELECT manzanas.Man_Nombre FROM manzanas INNER JOIN usuario ON usuario.FK_ID_Manzanas = manzanas.ID_Manzanas WHERE FK_ID_Manzanas = ?', [modificarData[0].FK_ID_Manzanas]
+    )
+
+    const modificarManzana = manzanaName.map((man) => ({
+      Manzana: man.Man_Nombre
+    }))
+
+    const datosModificarFiltrados = modificarData.map((modificar) => ({
+      Nombre: modificar.Usu_NombreCompleto,
+      Correo: modificar.Usu_CorreoElectronico,
+      Rol: modificar.Usu_TipoUsuario,
+      Telefono: modificar.Usu_Telefono,
+      Direccion: modificar.Usu_Direccion,
+      Ocupacion: modificar.Usu_Ocupacion,
+      IDU: modificar.ID_Usuario,
+    }));
+
+    res.json({ modificarDatos: datosModificarFiltrados, modificarManzana: modificarManzana});
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+
+app.put('/modificar-usuario/:IDU', async (req, res) => {
+  const IDU = req.params.IDU;
+  const { nombre, correo, rol, telefono, direccion, ocupacion } = req.body;
+  const { manzana } = req.body;
+
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [Manzana] = await conect.execute('SELECT manzanas.ID_Manzanas FROM manzanas WHERE Man_Nombre = ?', [manzana])
+    //console.log(Manzana);
+    await conect.execute(
+      'UPDATE Usuario SET Usu_NombreCompleto = ?, Usu_CorreoElectronico = ?, Usu_TipoUsuario = ?, Usu_Telefono = ?, Usu_Direccion = ?, Usu_Ocupacion = ?, FK_ID_Manzanas = ? WHERE ID_Usuario = ?',
+      [nombre, correo, rol, telefono, direccion, ocupacion, Manzana[0].ID_Manzanas, IDU]
+    );
+    res.status(200).send("Usuario actualizado con éxito");
+    await conect.end();
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+
+
+app.get('/servicios', async (req, res) => {
+  //const usuario = req.session.usuario;
+
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [serviciosData] = await conect.execute('SELECT * FROM Servicios');
+    const serviciosGuardadosFiltrados = serviciosData.map(servicios => ({
+      Nombre: servicios.Ser_Nombre,
+      Descripcion: servicios.Ser_Descripcion,
+      IDS: servicios.ID_Servicios
+    }));
+    res.json({ serviciosGuardados: serviciosGuardadosFiltrados });
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+//Elinar Servicio en la base
+app.delete('/eliminar-servicio-base/:IDS', async (req, res) => {
+  const servicioID = req.params.IDS;
+  console.log(req.params);
+
+  try {
+    const conect = await mysql2.createConnection(db)
+    await conect.execute('DELETE FROM Servicios WHERE ID_Servicios =?', [servicioID])
+    res.send().status(200)
+    await conect.end();
+
+  } catch (error) {
+    console.error('Error al eliminar el servicio:', error);
+    res.status(500).send('Error al eliminar el servicio');
+  }
+})
+
+// Ruta para obtener la información de una manzana específica
+app.get('/manzana/:id', async (req, res) => {
+  const { id } = req.params;
+  const result = await db.query('SELECT * FROM Manzanas WHERE ID_Manzanas = ?', [id]);
+  if (result.length > 0) {
+      res.json(result[0]);
+  } else {
+      res.status(404).send('Manzana no encontrada');
+  }
+});
+
+// Ruta para actualizar una manzana
+app.put('/manzana/:id', async (req, res) => {
+  const { id } = req.params;
+  const { Man_Nombre, Man_Direccion } = req.body;
+  const result = await db.query('UPDATE Manzanas SET Man_Nombre = ?, Man_Direccion = ? WHERE ID_Manzanas = ?', [Man_Nombre, Man_Direccion, id]);
+  if (result.affectedRows > 0) {
+      res.send('Manzana actualizada correctamente');
+  } else {
+      res.status(400).send('Error al actualizar la manzana');
+  }
+});
+
+
+//Eliminar Usuario
+app.delete('/eliminar-usuario/:IDU', async (req, res) => {
+  const usuarioID = req.params.IDU;
+  console.log(req.params);
+
+  try {
+    const conect = await mysql2.createConnection(db)
+    await conect.execute('DELETE FROM Usuario WHERE ID_Usuario =?', [usuarioID])
+    res.send().status(200)
+    await conect.end();
+
+  } catch (error) {
+    console.error('Error al eliminar el usuario:', error);
+    res.status(500).send('Error al eliminar el usuario');
+  }
+})
+
+//crear servicio
+app.post('/crear-servicio', async (req, res) => {
+  const { nombreServicio, descripcionServicio } = req.body;
+
+  try {
+      const conect = await mysql2.createConnection(db);
+      await conect.execute(
+          `INSERT INTO Servicios (Ser_Nombre, Ser_Descripcion) VALUES (?, ?)`,
+          [nombreServicio, descripcionServicio]
+      );
+      res.status(200).json({ message: "Servicio agregado correctamente" });
+  } catch (error) {
+      console.error("Error al agregar servicio:", error);
+      res.status(500).json({ error: "Error al agregar servicio" });
+  }
+});
+
+
+
+
+// Ruta para crear una nueva manzana
+
+
+// Cerrar sesion
+app.post('/cerrar-sesion', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      res.status(500).send('Error al cerrar sesión');
+    } else {
+      res.status(200).send('Sesión cerrada con éxito');
+    }
+  });
+});
+
+
 //Apertura del servidor
 app.listen(3000, () => {
   console.log(`Servidor Node.js escuchando`);
 })
-
