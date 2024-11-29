@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    
+
     <video src="./MULTIMEDIA/video1.1.mp4" autoplay loop></video>
 
 
@@ -100,32 +100,35 @@
                     xhrNombreUsuario.send()
 
                     //Evento al hacer click en el botón para desplegar servivios
+                    // Evento para desplegar los servicios disponibles
+                   
+
                     btnDesplegarServicios.addEventListener('click', () => {
-                        const xhrobtener = new XMLHttpRequest()
-                        xhrobtener.open('POST', '/obtener-servicios-usuario', true)
-                        xhrobtener.setRequestHeader('Content-Type', 'application/json')
+                        const xhrobtener = new XMLHttpRequest();
+                        xhrobtener.open('POST', '/obtener-servicios-usuario', true);
+                        xhrobtener.setRequestHeader('Content-Type', 'application/json');
                         xhrobtener.onreadystatechange = function () {
                             if (xhrobtener.readyState === 4) {
                                 if (xhrobtener.status === 200) {
-                                    const data = JSON.parse(xhrobtener.responseText)
-                                    listaServicios.innerHTML = '';
+                                    const data = JSON.parse(xhrobtener.responseText);
+                                    listaServicios.innerHTML = ''; // Limpiar la lista
                                     data.servicios.forEach(servicio => {
-                                        const row = document.createElement('tr')
+                                        const row = document.createElement('tr');
                                         row.innerHTML = `
-                <td>${servicio}</td>
-                <td><input type="checkbox" name="servicios" value="${servicio}"></td>
-                `
-                                        listaServicios.appendChild(row)
-                                    })
-                                    serviciosContainer.style.display = 'block'
-                                }
-                                else {
-                                    console.error('No se pueden cargar los servicios')
+                        <td>${servicio}</td>
+                        <td><input type="checkbox" name="servicios" value="${servicio}"></td>
+                    `;
+                                        listaServicios.appendChild(row);
+                                    });
+                                    serviciosContainer.style.display = 'block'; // Mostrar contenedor de servicios
+                                } else {
+                                    console.error('Error al obtener los servicios disponibles');
                                 }
                             }
-                        }
-                        xhrobtener.send()
-                    })
+                        };
+                        xhrobtener.send();
+                    });
+
 
 
 
@@ -163,37 +166,45 @@
 
                     // Evento para enviar los servicios guardados
 
+                    // Evento para desplegar los servicios guardados
                     const btnDesplegarServiciosGuardados = document.getElementById('btnDesplegarServiciosGuardados');
                     const serviciosGuardadosContainer = document.getElementById('servicios-guardados-container');
                     const listaServiciosGuardados = document.getElementById('lista-servicios-guardados');
+
                     btnDesplegarServiciosGuardados.addEventListener('click', () => {
-                        //Realizar una solicitud AJAX para obtener los servicios guardados por el usuario
+                        // Solicitar los servicios guardados del servidor
                         const xhrObtenerServiciosGuardados = new XMLHttpRequest();
                         xhrObtenerServiciosGuardados.open('POST', '/obtener-servicios-guardados', true);
                         xhrObtenerServiciosGuardados.onreadystatechange = function () {
                             if (xhrObtenerServiciosGuardados.readyState === 4) {
                                 if (xhrObtenerServiciosGuardados.status === 200) {
-                                    const data = JSON.parse(xhrObtenerServiciosGuardados.responseText)
-                                    listaServiciosGuardados.innerHTML =
-                                        data.serviciosGuardados.map(servicio =>
-                                            `
-                                        <tr>
-
-                                            <td>${servicio.Fecha}</td>
-                                            <td>${servicio.Nombre}</td>
-                                            <td><button onclick="eliminarServicio(${servicio.id})">Eliminar</button></td>
-                                            <!--Agrega más columnas si es necesario -->
-                                        </tr >
-                                    `).join('');
-                                    serviciosGuardadosContainer.style.display = 'block';
+                                    const data = JSON.parse(xhrObtenerServiciosGuardados.responseText);
+                                    // Limpiar la lista antes de agregar los nuevos servicios
+                                    listaServiciosGuardados.innerHTML = '';
+                                    // Verificar si hay servicios guardados y mostrarlos
+                                    if (data.serviciosGuardados && data.serviciosGuardados.length > 0) {
+                                        data.serviciosGuardados.forEach(servicio => {
+                                            const row = document.createElement('tr');
+                                            row.innerHTML = `
+                            <td>${servicio.Fecha}</td>
+                            <td>${servicio.Nombre}</td>
+                            <td><button onclick="eliminarServicio(${servicio.id})">Eliminar</button></td>
+                        `;
+                                            listaServiciosGuardados.appendChild(row);
+                                        });
+                                        serviciosGuardadosContainer.style.display = 'block'; // Mostrar contenedor de servicios guardados
+                                    } else {
+                                        listaServiciosGuardados.innerHTML = '<tr><td colspan="3">No hay servicios guardados.</td></tr>';
+                                        serviciosGuardadosContainer.style.display = 'block';
+                                    }
                                 } else {
                                     console.error('Error al obtener servicios guardados');
                                 }
-
                             }
-                        }
+                        };
                         xhrObtenerServiciosGuardados.send();
-                    })
+                    });
+
 
                     const btnCerrarSesion = document.getElementById("btncerrarsesion");
 
@@ -248,6 +259,10 @@
                     };
                     xhrEliminarServicio.send();
                 }
+
+                
+
+
 
 
 

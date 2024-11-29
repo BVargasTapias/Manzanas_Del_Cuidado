@@ -116,33 +116,52 @@
             <button id="enviarServicio">Crear Servicio</button>
         </div>
         <!-- Botón para crear manzana -->
-        <div id="crearManzanaContainer" style="display: none;">
-            <h2>Crear Nueva Manzana</h2>
-            <form id="formularioCrearManzana">
-                <label for="nombreManzana">Nombre de la Manzana:</label>
-                <input type="text" id="nombreManzana" required>
+        <button id="btnCrearManzana">Manzanas</button>
 
-                <label for="direccionManzana">Dirección de la Manzana:</label>
-                <input type="text" id="direccionManzana" required>
 
-                <button type="submit" id="guardarManzana">Guardar Manzana</button>
-            </form>
+        <div class="containerManzanas" id="containerManzanas" style="display: none;">
+            <h2>Gestión de Manzanas</h2>
+            <table class="form-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaManzanas">
+
+                </tbody>
+            </table>
+            <button id="CrearManzana">Crear Manzana</button>
         </div>
 
-        <!-- Botón para crear manzana -->
-        <button id="btnCrearManzana">Crear Manzana</button>
-
-        <div id="crearManzanaContainer" style="display: none;">
+        <div class="containerCrearManzana" id="containerCrearManzana" style="display: none;">
             <h2>Crear Manzana</h2>
-            <form id="formularioCrearManzana">
-                <label for="nombreManzana">Nombre de la Manzana:</label>
-                <input type="text" id="nombreManzana">
+            <table class="form-table">
 
-                <label for="ubicacion">Ubicación:</label>
-                <input type="text" id="ubicacion">
+                <tr>
+                    <td><label for="nombreManzana">Nombre:</label></td>
+                    <td><input type="text" id="nombreManzana" name="nombreManzana"></td>
+                </tr>
+                <tr>
+                    <td><label for="ubicacionManzana">Ubicacion:</label></td>
+                    <td><input type="text" id="ubicacionManzana" name="ubicacionManzana"></td>
+                </tr>
 
-                <button type="submit" id="guardarManzana">Guardar Manzana</button>
-            </form>
+            </table>
+            <button id="enviarManzana">Enviar Manzana</button>
+        </div>
+
+        <div class="agregarServicio" id="agregarServicio" style="display: none;">
+            <table class="form-table">
+                <tr>
+                    <td  id="tablaServicios">Tabla de servicios</td>
+                </tr>
+                <tr>
+                    <td id="listaServicios2">Lista de Servicios</td>
+                </tr>
+            </table>
+            <button type="submit" id="servicioAgregado">Aregar Servicios</button>
         </div>
 
         <!-- Botón para cerrar sesión -->
@@ -265,8 +284,198 @@
             });
 
 
+            // anexo parte final
+            const btnCrearManzana = document.getElementById("btnCrearManzana")
+            btnCrearManzana.addEventListener("click", () => {
+                containerServicios.style.display = "none";
+                containerManzanas.style.display = "block";
+                containerUsuarios.style.display = "none";
+                containerCrearManzana.style.display = "none";
+                agregarServicio.style.display = "none";
+
+                const xhrobtenerManzanas = new XMLHttpRequest();
+                xhrobtenerManzanas.open("get", "/obtener-manzanas", true);
+                xhrobtenerManzanas.onreadystatechange = function () {
+                    if (xhrobtenerManzanas.readyState === 4) {
+                        if (xhrobtenerManzanas.status === 200) {
+                            const data = JSON.parse(xhrobtenerManzanas.responseText);
+                            listaManzanas.innerHTML = data.manzanasGuardadas
+                                .map((manzana) => `
+            <tr>
+              <td>${manzana.Nombre}</td>
+              <td>
+                <button onclick="agregarManzana(${manzana.IDM})">Agregar Servicio</button>
+                <button onclick="eliminarManzana(${manzana.IDM})">Eliminar</button>
+              </td>
+            </tr>
+            `).join('');
+                            containerServicios.style.display = "none";
+                            containerCrear.style.display = "none";
+                        } else {
+                            console.error("Error al obtener servicios guardados");
+                        }
+                    }
+                };
+                xhrobtenerManzanas.send();
+            });
+
+
+
+
+
+            const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+
+            btnCerrarSesion.addEventListener("click", async () => {
+                try {
+                    const response = await fetch("/cerrar-sesion", {
+                        method: "POST",
+                    });
+
+                    if (response.ok) {
+                        alert("Sesión cerrada con éxito.");
+                        window.location.href = "./inicio.html";
+                    } else {
+                        alert("Error al cerrar la sesión. Intente de nuevo.");
+                    }
+                } catch (error) {
+                    console.error("Error al cerrar la sesión:", error);
+                    alert("Ocurrió un error. Intente más tarde.");
+                }
+            });
+
+            window.onload = function () {
+                        window.history.forward()
+                    }
+                    window.onpageshow = function (event) {
+                        if (event.persisted) {
+                            window.location.reload()
+                        }
+                    }
+
+
 
         })
+
+
+        const CrearManzana = document.getElementById("CrearManzana")
+        CrearManzana.addEventListener("click", () => {
+            containerCrearManzana.style.display = "block";
+            containerManzanas.style.display = "none";
+        });
+
+
+
+        const enviarManzana = document.getElementById("enviarManzana");
+        enviarManzana.addEventListener("click", () => {
+
+            const nombreManzana = document.getElementById("nombreManzana").value;
+            const ubicacionManzana = document.getElementById("ubicacionManzana").value;
+
+            const datos = {
+                nombreManzana,
+                ubicacionManzana
+            };
+
+
+            const xhrenviarManzanaCreada = new XMLHttpRequest();
+            xhrenviarManzanaCreada.open("POST", "/crear-manzana", true);
+            xhrenviarManzanaCreada.setRequestHeader("Content-Type", "application/json");
+            xhrenviarManzanaCreada.onreadystatechange = function () {
+                if (xhrenviarManzanaCreada.readyState === 4) {
+                    if (xhrenviarManzanaCreada.status === 200) {
+                        alert("Manzana Agregada");
+                        window.location.reload();
+                    } else {
+                        console.error("Error al agreagar la manzana");
+                    }
+                }
+            };
+
+            xhrenviarManzanaCreada.send(JSON.stringify(datos));
+        });
+
+        //Evento para traer los servicios
+        function agregarManzana(IDM) {
+            // Guardamos el ID de la manzana para usarlo más adelante
+            const manzanaID = IDM;
+
+            agregarServicio.style.display = "block";
+            containerManzanas.style.display = "none";
+            const servicioAgregar = document.getElementById("servicioAgregar");
+
+            // Llamamos al backend para obtener los servicios
+            const xhrAgregarServicio = new XMLHttpRequest();
+            xhrAgregarServicio.open("post", "/agregar-servicio", true);
+            xhrAgregarServicio.setRequestHeader("Content-Type", "application/json");
+
+            xhrAgregarServicio.onreadystatechange = function () {
+                if (xhrAgregarServicio.readyState === 4) {
+                    if (xhrAgregarServicio.status === 200) {
+                        const servicios = JSON.parse(xhrAgregarServicio.responseText);
+                        console.log(servicios); // Aquí verás los servicios obtenidos del backend
+
+                        const listaServicios2 = document.getElementById("listaServicios2");
+                        listaServicios2.innerHTML = ""; // Limpiar lista antes de agregar los servicios
+
+                        servicios.forEach((servicio) => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                        <td>${servicio.Ser_Nombre}</td>
+                        <td><input type="checkbox" name="servicios" value="${servicio.ID_Servicios}"></td>
+                        <td style="display: none;">${servicio.ID_Servicios}</td>
+                    `;
+                            listaServicios2.appendChild(row);
+                        });
+
+                    } else {
+                        console.error("No se pudieron cargar los servicios de la base de datos");
+                    }
+                }
+            };
+
+            xhrAgregarServicio.send(); // No necesitas enviar nada en este caso, solo obtienes los servicios
+
+            // Aquí agregamos el evento para enviar los servicios seleccionados
+            document.getElementById("servicioAgregado").addEventListener("click", function () {
+                const selectedServicios = [];
+                const checkboxes = document.querySelectorAll('input[name="servicios"]:checked');
+
+                checkboxes.forEach((checkbox) => {
+                    selectedServicios.push(checkbox.value);
+                });
+
+                if (selectedServicios.length > 0) {
+                    // Aquí tomamos el ID de la manzana desde la variable manzanaID
+                    const data = {
+                        servicios: selectedServicios,
+                        manzana: manzanaID // Usamos la variable manzanaID aquí
+                    };
+
+                    const xhrAgregar = new XMLHttpRequest();
+                    xhrAgregar.open("POST", "/agregar-servicio-manzana", true);
+                    xhrAgregar.setRequestHeader("Content-Type", "application/json");
+
+                    xhrAgregar.onreadystatechange = function () {
+                        if (xhrAgregar.readyState === 4) {
+                            if (xhrAgregar.status === 200) {
+                                alert("Servicios agregados correctamente.");
+                                window.location.reload();
+                                // Aquí puedes actualizar la UI si es necesario
+                            } else {
+                                console.error("Error al agregar los servicios.");
+                            }
+                        }
+                    };
+
+                    xhrAgregar.send(JSON.stringify(data));
+                } else {
+                    alert("Por favor, selecciona al menos un servicio.");
+                }
+            });
+        }
+
+
+
 
         function modificarUsuario(IDU) {
             const containermodificar = document.getElementById("containermodificar");
@@ -388,30 +597,36 @@
         }
 
 
+        function eliminarManzana(IDM) {
+            const xhrEliminarManzanaBase = new XMLHttpRequest();
+            xhrEliminarManzanaBase.open(
+                "delete",
+                `/eliminar-manzana-base/${IDM}`,
+                true
+            );
+            xhrEliminarManzanaBase.setRequestHeader('Content-Type', 'application/json');
+            xhrEliminarManzanaBase.onreadystatechange = function () {
+                if (
+                    xhrEliminarManzanaBase.readyState === 4) {
+                    if (xhrEliminarManzanaBase.status === 200) {
+                        alert("Manzana Eliminada");
+                        window.location.reload();
+                    }
 
-
-
-
-
-
-        // MODIFICAR MANZANAS
-
-        function cargarManzanas() {
-            fetch('/manzanas')
-                .then(response => response.json())
-                .then(data => {
-                    const listaManzanas = document.getElementById("listaManzanas");
-                    listaManzanas.innerHTML = data.map(manzana => `
-                <tr>
-                    <td>${manzana.Man_Nombre}</td>
-                    <td>${manzana.Man_Direccion}</td>
-                </tr>
-            `).join('');
-                })
-                .catch(error => console.error("Error al cargar manzanas:", error));
-            alert("Manzana creada con éxito");
-            cargarManzanas();
+                } else {
+                    console.error("Error al eliminar el servicio");
+                }
+            };
+            xhrEliminarManzanaBase.send();
         }
+
+
+
+
+
+
+
+       
     </script>
 
 

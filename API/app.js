@@ -178,31 +178,27 @@ app.post('/guardar-servicios-usuario', async (req, res) => {
 
 app.post('/obtener-servicios-guardados', async (req, res) => {
   const usuario = req.session.usuario;
-  const Documento = req.session.Documento
+  const Documento = req.session.Documento;
   try {
-    // Conectar a la base de datos y consultar los servicios guardados por el usuario
-    const conect = await mysql2.createConnection(db)
-    const [IDU] = await conect.execute('SELECT usuario.ID_Usuario FROM usuario WHERE usuario.Usu_NumeroDocumento=?', [Documento])
-    const [serviciosGuardadosData] = await conect.execute('SELECT servicios.Ser_Nombre, solicitudes.Sol_FechaHora, solicitudes.ID_Solicitudes FROM servicios INNER JOIN servicios_manzanas ON servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON servicios_manzanas.FK_ID_Manzanas=manzanas.ID_Manzanas INNER JOIN usuario ON manzanas.ID_Manzanas=usuario.FK_ID_Manzanas INNER JOIN solicitudes ON usuario.ID_Usuario=solicitudes.FK_ID_Usuario WHERE solicitudes.FK_ID_Usuario=? AND servicios.ID_Servicios=solicitudes.Sol_Codigoserv;', [IDU[0].ID_Usuario]);
+      // Conectar a la base de datos y consultar los servicios guardados por el usuario
+      const conect = await mysql2.createConnection(db);
+      const [IDU] = await conect.execute('SELECT usuario.ID_Usuario FROM usuario WHERE usuario.Usu_NumeroDocumento=?', [Documento]);
+      const [serviciosGuardadosData] = await conect.execute('SELECT servicios.Ser_Nombre, solicitudes.Sol_FechaHora, solicitudes.ID_Solicitudes FROM servicios INNER JOIN servicios_manzanas ON servicios_manzanas.FK_ID_Servicios=servicios.ID_Servicios INNER JOIN manzanas ON servicios_manzanas.FK_ID_Manzanas=manzanas.ID_Manzanas INNER JOIN usuario ON manzanas.ID_Manzanas=usuario.FK_ID_Manzanas INNER JOIN solicitudes ON usuario.ID_Usuario=solicitudes.FK_ID_Usuario WHERE solicitudes.FK_ID_Usuario=? AND servicios.ID_Servicios=solicitudes.Sol_Codigoserv;', [IDU[0].ID_Usuario]);
 
-    console.log(serviciosGuardadosData)
-    const serviciosGuardadosFiltrados = serviciosGuardadosData.map(servicio => ({
-      Nombre: servicio.Ser_Nombre,
-      Fecha: servicio.Sol_FechaHora,
-      id: servicio.ID_Solicitudes 
-      //Agrega más propiedades si es necesario
-    }));
-    //Enviar los datos de los servidores guardados al cliente
-    res.json({ serviciosGuardados: serviciosGuardadosFiltrados
-    });
-    // Cerrar la conexión
-    await conect.end();
+      const serviciosGuardadosFiltrados = serviciosGuardadosData.map(servicio => ({
+          Nombre: servicio.Ser_Nombre,
+          Fecha: servicio.Sol_FechaHora,
+          id: servicio.ID_Solicitudes,
+      }));
+
+      res.json({ serviciosGuardados: serviciosGuardadosFiltrados });
+      await conect.end();
   } catch (error) {
-    console.error('Error en el servidor:', error);
-    res.status(500).send('Error en el servidor')
+      console.error('Error en el servidor:', error);
+      res.status(500).send('Error en el servidor');
   }
-
 });
+
 
 app.post('/manzanas', async (req, res) => {
   try {
@@ -364,6 +360,22 @@ app.delete('/eliminar-servicio-base/:IDS', async (req, res) => {
   }
 })
 
+app.delete('/eliminar-manzana-base/:IDM', async (req, res) => {
+  const solicitudID = req.params.IDM; 
+  console.log("Solicitud: ", solicitudID);
+
+  try {
+    const conect = await mysql2.createConnection(db)
+    await conect.execute('DELETE FROM Manzanas WHERE ID_Manzanas =?', [solicitudID])
+    res.send().status(200)
+    await conect.end();
+
+  } catch (error) {
+    console.error('Error al eliminar la solicitud:', error);
+    res.status(500).send('Error al eliminar la solicitud');
+  }
+})
+
 // Ruta para obtener la información de una manzana específica
 app.get('/manzana/:id', async (req, res) => {
   const { id } = req.params;
@@ -423,7 +435,91 @@ app.post('/crear-servicio', async (req, res) => {
 });
 
 
+app.get('/obtener-manzanas', async (req, res) => {
+  const usuario = req.session.usuario;
 
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [manzanasData] = await conect.execute('SELECT * FROM Manzanas');
+    const manzanasGuardadasFiltradas = manzanasData.map(manzana => ({
+      Nombre: manzana.Man_Nombre,
+      IDM: manzana.ID_Manzanas
+    }));
+    res.json({ manzanasGuardadas: manzanasGuardadasFiltradas });
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+
+
+
+//Crear Manzana
+app.post('/crear-manzana', async (req, res) => {
+  const { nombreManzana, ubicacionManzana } = req.body;
+  try {
+    const conect = await mysql2.createConnection(db);
+    await conect.execute(
+      `INSERT INTO Manzanas (Man_Nombre, Man_Direccion) VALUES (?, ?)`,
+      [nombreManzana, ubicacionManzana]
+    );
+    res.status(200).json({ message: "Manzana agregada correctamente" });
+  } catch (error) {
+    console.error("Error al agregar manzana:", error);
+    res.status(500).json({ error: "Error al agregar manzana" });
+  }
+});
+
+
+
+//Agregar Servicio
+app.post('/agregar-servicio', async (req, res) => {
+  try {
+    const conect = await mysql2.createConnection(db);
+    const [serviciosData] = await conect.execute('SELECT * FROM Servicios');
+    
+    const serviciosGuardadosFiltrados = serviciosData.map(servicios => ({
+      Ser_Nombre: servicios.Ser_Nombre,
+      Ser_Descripcion: servicios.Ser_Descripcion,
+      ID_Servicios: servicios.ID_Servicios
+    }));
+    
+    // Aseguramos que el cliente reciba solo los datos necesarios
+    res.json(serviciosGuardadosFiltrados);
+    await conect.end();
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).send('Error en el servidor');
+  }
+});
+
+
+
+
+// Endpoint para agregar un servicio a una manzana
+app.post('/agregar-servicio-manzana', async (req, res) => {
+  try {
+      const { servicios, manzana } = req.body;
+      
+      const conect = await mysql2.createConnection(db);
+
+      // Insertar los servicios seleccionados en la tabla intermedia Servicios_Manzanas
+      for (let i = 0; i < servicios.length; i++) {
+          await conect.execute(
+              'INSERT INTO Servicios_Manzanas (FK_ID_Servicios, FK_ID_Manzanas) VALUES (?, ?)',
+              [servicios[i], manzana]
+          );
+      }
+
+      res.json({ success: true, message: 'Servicios agregados correctamente.' });
+      await conect.end();
+  } catch (error) {
+      console.error('Error al agregar los servicios:', error);
+      res.status(500).send('Error en el servidor');
+  }
+});
 
 // Ruta para crear una nueva manzana
 

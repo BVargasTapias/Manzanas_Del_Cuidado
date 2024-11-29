@@ -1,4 +1,4 @@
--- Active: 1732315454964@@127.0.0.1@3306@bbdd_manzanas_del_cuidado
+
 DROP DATABASE bbdd_Manzanas_Del_Cuidado;
 
 CREATE DATABASE BBDD_Manzanas_Del_Cuidado DEFAULT CHARACTER SET = 'utf8mb4';
@@ -29,11 +29,11 @@ CREATE TABLE Servicios_Manzanas (
     FK_ID_Manzanas INT(10),
     fechaHora DATETIME,
     FOREIGN KEY (FK_ID_Servicios) REFERENCES Servicios (ID_Servicios) ON DELETE CASCADE,
-    FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas)
+    FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas) ON DELETE CASCADE
 )
 
 CREATE TABLE Usuario (
-    ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Usuario INT AUTO_INCREMENT PRIMARY KEY ,
     Usu_TipoUsuario SET('Usuario', 'Administrador'), 
     Usu_TipoDocumento SET('CC', 'TI'),
     Usu_NumeroDocumento INT(10),
@@ -46,7 +46,7 @@ CREATE TABLE Usuario (
     FOREIGN KEY (FK_ID_Manzanas) REFERENCES Manzanas (ID_Manzanas)
 );
 
--- Se crea tabla Solicitudes con llave foranea.
+
 
 CREATE TABLE Solicitudes (
     ID_Solicitudes INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +54,7 @@ CREATE TABLE Solicitudes (
     Sol_Codigoserv INT(10),
     FK_ID_Usuario INT(10),
     FOREIGN KEY (FK_ID_Usuario) REFERENCES Usuario (ID_Usuario)
-)
+);
 
 ALTER TABLE Usuario ADD UNIQUE (Usu_NumeroDocumento);
 
