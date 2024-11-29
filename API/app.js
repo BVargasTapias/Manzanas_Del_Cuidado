@@ -343,7 +343,7 @@ app.get('/servicios', async (req, res) => {
   }
 });
 
-//Elinar Servicio en la base
+//Eliminar Servicio en la base
 app.delete('/eliminar-servicio-base/:IDS', async (req, res) => {
   const servicioID = req.params.IDS;
   console.log(req.params);

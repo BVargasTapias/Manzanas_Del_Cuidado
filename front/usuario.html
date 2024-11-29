@@ -19,18 +19,19 @@
 
     <div class="container">
         <div class="titulo">
-            <h1>Bienvenidos,<span id="nombreUsuario"></span></h1>
+            <h1>Bienvenidos, <span id="nombreUsuario"></span></h1>
 
 
             <!-- btn de servicios guardados en el container -->
 
             <button id="btnserviciosguardados">Servicios Guardados </button>
-
+            <br>
 
             <!--Container para  mostrar los serivicio del usuario-->
 
             <div id="servicios-container" style="display: none;">
                 <form id="formularioSeleccionServicio">
+                    <br>
                     <h2>Servicios del Usuario</h2>
                     <table id="tabla-servicios">
                         <thead>
@@ -42,11 +43,15 @@
 
                         <tbody id="lista-servicios"></tbody>
                     </table>
-
+                    <br>
                     <input type="datetime-local" id="fechahora" name="fechaHora" required>
-                    <button type="submit">Guardar Servicios</button>
+                    <br>
+                    <br>
+                    <button type="submit" id="guarserv">Guardar Servicios</button>
                 </form>
             </div>
+            <br>
+            <br>
 
             <!-- btn de desplegar servicios -->
 
@@ -55,19 +60,23 @@
             <!--Contenedor para mostrar los servicios guardados-->
 
             <div id="servicios-guardados-container" style="display: none;">
+                <br>
                 <h2>Servicios Guardados</h2>
+                <br>
                 <table id="tabla-servicios-guardados">
                     <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Servicio</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody id="lista-servicios-guardados"></tbody>
                 </table>
             </div>
-
-
+            <br>
+            <br>
+            <br>
             <!-- Botón para cerrar sesión -->
 
             <button id="btncerrarsesion">Cerrar Sesión </button>
@@ -101,7 +110,7 @@
 
                     //Evento al hacer click en el botón para desplegar servivios
                     // Evento para desplegar los servicios disponibles
-                   
+
 
                     btnDesplegarServicios.addEventListener('click', () => {
                         const xhrobtener = new XMLHttpRequest();
@@ -260,7 +269,7 @@
                     xhrEliminarServicio.send();
                 }
 
-                
+
 
 
 

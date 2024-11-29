@@ -21,11 +21,14 @@
         <!--<form id="formularioPrincipal">-->
 
         <!-- Botón para gestionar usuarios -->
-        <button id="btnUsuarios">Usuarios</button>
+        <button id="btnUsuarios"> Usuarios</button>
+
         <!--Contenedor para mostrar los Usuarios guardados-->
         <div class="containerUsuarios" id=containerUsuarios style="display: none;">
             <!--  <form id="formularioSeleccionUsuario">  -->
+                <br>
             <h2>Gestión de Usuarios</h2>
+            <br>
             <table id="Tabla-usuarios">
                 <thead>
                     <tr>
@@ -37,8 +40,12 @@
                 </tbody>
             </table>
         </div>
+       
+    
         <div class="containermodificar" id="containermodificar" style="display: none;">
+            <br>
             <h2>Actualizar Datos</h2>
+            <br>
             <form id="formModificar">
                 <table class="form-table">
                     <tr>
@@ -47,7 +54,7 @@
                     </tr>
                     <tr>
                         <td><label for="email">Correo:</label></td>
-                        <td><input type="email" id="email" name="email" required></td>
+                        <td><input type="text" id="email" name="email" required></td>
                     </tr>
                     <tr>
                         <td><label for="TipoUsuario">Rol:</label></td>
@@ -55,7 +62,7 @@
                     </tr>
                     <tr>
                         <td><label for="telefono">Teléfono:</label></td>
-                        <td><input type="tel" id="telefono" name="telefono" required></td>
+                        <td><input type="text" id="telefono" name="telefono" required></td>
                     </tr>
                     <tr>
                         <td><label for="direccion">Dirección:</label></td>
@@ -77,12 +84,15 @@
                 </table>
             </form>
         </div>
-
+<br>
+<br>
         <!-- Botón para gestionar servicios -->
         <button id="btnServicios">Servicios</button>
 
         <div class="containerServicios" id="containerServicios" style="display: none;">
+            <br>
             <h2>Gestión de Servicios</h2>
+            <br>
             <table class="form-table">
                 <thead>
                     <tr>
@@ -95,11 +105,15 @@
 
                 </tbody>
             </table>
+            <br>
+            <br>
             <button id="crearServicio">Crear Servicio</button>
         </div>
 
         <div class="containerCrear" id="containerCrear" style="display: none;">
+            <br>
             <h2>Crear Servicio</h2>
+            <br>
             <table class="form-table">
 
                 <tr>
@@ -111,16 +125,20 @@
                     <td><input type="text" id="descripcionServicio" name="descripcionManzana"></td>
                 </tr>
 
-
             </table>
+            <br>
+            <br>
             <button id="enviarServicio">Crear Servicio</button>
         </div>
+        <br>
+        <br>
         <!-- Botón para crear manzana -->
         <button id="btnCrearManzana">Manzanas</button>
 
-
         <div class="containerManzanas" id="containerManzanas" style="display: none;">
+            <br>
             <h2>Gestión de Manzanas</h2>
+            <br>
             <table class="form-table">
                 <thead>
                     <tr>
@@ -132,11 +150,15 @@
 
                 </tbody>
             </table>
+            <br>
+            <br>
             <button id="CrearManzana">Crear Manzana</button>
         </div>
 
         <div class="containerCrearManzana" id="containerCrearManzana" style="display: none;">
+            <br>
             <h2>Crear Manzana</h2>
+            <br>
             <table class="form-table">
 
                 <tr>
@@ -149,6 +171,7 @@
                 </tr>
 
             </table>
+            <br>
             <button id="enviarManzana">Enviar Manzana</button>
         </div>
 
@@ -163,7 +186,8 @@
             </table>
             <button type="submit" id="servicioAgregado">Aregar Servicios</button>
         </div>
-
+<br>
+<br>
         <!-- Botón para cerrar sesión -->
         <button id="btnCerrarSesion">Cerrar Sesión</button>
         </table>
@@ -305,6 +329,7 @@
               <td>${manzana.Nombre}</td>
               <td>
                 <button onclick="agregarManzana(${manzana.IDM})">Agregar Servicio</button>
+                
                 <button onclick="eliminarManzana(${manzana.IDM})">Eliminar</button>
               </td>
             </tr>

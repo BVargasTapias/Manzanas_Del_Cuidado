@@ -1,12 +1,13 @@
+-- Active: 1726397805152@@127.0.0.1@3306@
 
 DROP DATABASE bbdd_Manzanas_Del_Cuidado;
+
 
 CREATE DATABASE BBDD_Manzanas_Del_Cuidado DEFAULT CHARACTER SET = 'utf8mb4';
 
 USE BBDD_Manzanas_Del_Cuidado;
 
 --Se crea la tabla de Manzanas.
-
 CREATE TABLE Manzanas (
     ID_Manzanas INT AUTO_INCREMENT PRIMARY KEY,
     Man_Nombre VARCHAR(20),

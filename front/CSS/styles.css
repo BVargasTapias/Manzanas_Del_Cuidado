@@ -143,6 +143,7 @@ input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    background-color: #cfbaf0;
 }
 
 select,
@@ -154,14 +155,26 @@ input[type="number"] {
     font-size: 16px;
 }
 
-button {
+.enviar {
+
     padding: 10px 20px;
-    background: linear-gradient(to right, #613175, #34db66);
+    background: linear-gradient(to right, #ac5bdb, #2eebac);
     color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
+    transition: background 0.3s;
+}
+
+button {
+    padding: 8px 18px;
+    background: linear-gradient(to right, #c77dff, #e0aaff);
+    color: #3c096c;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
     transition: background 0.3s;
 }
 
@@ -219,7 +232,7 @@ p {
     margin-left: 10%;
 }
 
-#btnCrearManzana{
+#btnCrearManzana {
     padding: 10px 20px;
     background: linear-gradient(to right, #48dbb7, #7944f3);
     color: white;
@@ -233,7 +246,7 @@ p {
 
 }
 
-#btncerrarsesion{
+#btncerrarsesion {
     padding: 10px 20px;
     background: linear-gradient(to right, #e93434, #863058);
     color: white;
@@ -250,9 +263,10 @@ p {
     padding: 10px 20px;
     border-radius: 20px;
     background-color: #cfbaf0;
+    margin-left: 20%;
 }
 
-#btnserviciosguardados{
+#btnserviciosguardados {
     padding: 10px 20px;
     background: linear-gradient(to right, #48dbb7, #7944f3);
     color: white;
@@ -266,7 +280,21 @@ p {
 
 }
 
-#guarserv{
+#guarserv {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 60%;
+    margin-left: 20%;
+}
+
+#btnDesplegarServiciosGuardados {
+
     padding: 10px 20px;
     background: linear-gradient(to right, #48dbb7, #7944f3);
     color: white;
@@ -279,10 +307,32 @@ p {
     margin-left: 10%;
 }
 
-#btnDesplegarServiciosGuardados{
+table {
+    margin-left: 10%;
+    border-collapse: collapse;
+    width: 80%;
+}
 
+th,
+td {
+    border: 1px solid rgb(142, 14, 201);
+    text-align: left;
+    padding: 8px;
+
+}
+
+th {
+    background-color: #e39bf5;
+    text-align: center;
+}
+
+h2 {
+    margin-left: 20%;
+}
+
+#btnCerrarSesion{
     padding: 10px 20px;
-    background: linear-gradient(to right, #48dbb7, #7944f3);
+    background: linear-gradient(to right, #e93434, #863058);
     color: white;
     border: none;
     border-radius: 20px;
@@ -291,4 +341,69 @@ p {
     transition: background 0.3s;
     width: 80%;
     margin-left: 10%;
+}
+
+#enviarServicio {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 50%;
+    margin-left: 25%;
+}
+
+#enviarManzana {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 50%;
+    margin-left: 25%;
+}
+
+#btnGuardarCambios {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 80%;
+    margin-left: 11%;
+}
+
+#crearServicio {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 50%;
+    margin-left: 20%;
+}
+
+#CrearManzana {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #65db48, #7944f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 50%;
+    margin-left: 20%;
 }
