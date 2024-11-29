@@ -130,6 +130,7 @@
                                         listaServicios.appendChild(row);
                                     });
                                     serviciosContainer.style.display = 'block'; // Mostrar contenedor de servicios
+                                    serviciosGuardadosContainer.style.display = 'none';
                                 } else {
                                     console.error('Error al obtener los servicios disponibles');
                                 }
@@ -202,6 +203,7 @@
                                             listaServiciosGuardados.appendChild(row);
                                         });
                                         serviciosGuardadosContainer.style.display = 'block'; // Mostrar contenedor de servicios guardados
+                                        serviciosContainer.style.display = 'none';
                                     } else {
                                         listaServiciosGuardados.innerHTML = '<tr><td colspan="3">No hay servicios guardados.</td></tr>';
                                         serviciosGuardadosContainer.style.display = 'block';
