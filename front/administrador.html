@@ -26,7 +26,7 @@
         <!--Contenedor para mostrar los Usuarios guardados-->
         <div class="containerUsuarios" id=containerUsuarios style="display: none;">
             <!--  <form id="formularioSeleccionUsuario">  -->
-                <br>
+            <br>
             <h2>Gestión de Usuarios</h2>
             <br>
             <table id="Tabla-usuarios">
@@ -40,8 +40,8 @@
                 </tbody>
             </table>
         </div>
-       
-    
+
+
         <div class="containermodificar" id="containermodificar" style="display: none;">
             <br>
             <h2>Actualizar Datos</h2>
@@ -84,8 +84,8 @@
                 </table>
             </form>
         </div>
-<br>
-<br>
+        <br>
+        <br>
         <!-- Botón para gestionar servicios -->
         <button id="btnServicios">Servicios</button>
 
@@ -178,7 +178,7 @@
         <div class="agregarServicio" id="agregarServicio" style="display: none;">
             <table class="form-table">
                 <tr>
-                    <td  id="tablaServicios">Tabla de servicios</td>
+                    <td id="tablaServicios">Tabla de servicios</td>
                 </tr>
                 <tr>
                     <td id="listaServicios2">Lista de Servicios</td>
@@ -186,8 +186,8 @@
             </table>
             <button type="submit" id="servicioAgregado">Aregar Servicios</button>
         </div>
-<br>
-<br>
+        <br>
+        <br>
         <!-- Botón para cerrar sesión -->
         <button id="btnCerrarSesion">Cerrar Sesión</button>
         </table>
@@ -233,6 +233,11 @@
             </tr>
             `).join('');
                             containerUsuarios.style.display = "block";
+                            containerServicios.style.display = "none";
+                            containerCrear.style.display = "none";
+                            containerManzanas.style.display = "none";
+                            containerCrearManzana.style.display = "none";
+                            agregarServicio.style.display = "none";
                         } else {
                             console.error("Error al obtener servicios guardados");
                         }
@@ -262,7 +267,12 @@
                 `).join('');
                             //containerCrear.style.display = "none";
                             containerUsuarios.style.display = "none";
+                            containermodificar.style.display = "none";
                             containerServicios.style.display = "block";
+                            containerCrear.style.display = "none";
+                            containerManzanas.style.display = "none";
+                            containerCrearManzana.style.display = "none";
+                            agregarServicio.style.display = "none";
                         } else {
                             console.error("Error al obtener servicios guardados");
                         }
@@ -312,8 +322,10 @@
             const btnCrearManzana = document.getElementById("btnCrearManzana")
             btnCrearManzana.addEventListener("click", () => {
                 containerServicios.style.display = "none";
+                containerCrear.style.display = "none";
                 containerManzanas.style.display = "block";
                 containerUsuarios.style.display = "none";
+                containermodificar.style.display = "none";
                 containerCrearManzana.style.display = "none";
                 agregarServicio.style.display = "none";
 
@@ -369,13 +381,13 @@
             });
 
             window.onload = function () {
-                        window.history.forward()
-                    }
-                    window.onpageshow = function (event) {
-                        if (event.persisted) {
-                            window.location.reload()
-                        }
-                    }
+                window.history.forward()
+            }
+            window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload()
+                }
+            }
 
 
 
@@ -385,7 +397,12 @@
         const CrearManzana = document.getElementById("CrearManzana")
         CrearManzana.addEventListener("click", () => {
             containerCrearManzana.style.display = "block";
+            containerUsuarios.style.display = "none";
+            containermodificar.style.display = "none";
+            containerServicios.style.display = "none";
+            containerCrear.style.display = "none";
             containerManzanas.style.display = "none";
+            agregarServicio.style.display = "none";
         });
 
 
@@ -564,6 +581,11 @@
                         alert("Usuario actualizado con éxito");
                         containermodificar.style.display = "none";
                         containerUsuarios.style.display = "block";
+                        containerServicios.style.display = "none";
+                        containerCrear.style.display = "none";
+                        containerManzanas.style.display = "none";
+                        containerCrearManzana.style.display = "none";
+                        agregarServicio.style.display = "none";
                     } else {
                         console.error("Error al actualizar los datos del usuario.");
                     }
@@ -651,7 +673,7 @@
 
 
 
-       
+
     </script>
 
 
