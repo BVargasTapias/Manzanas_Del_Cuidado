@@ -146,15 +146,15 @@
                     const formularioSeleccionServicio = document.getElementById('formularioSeleccionServicio')
                     formularioSeleccionServicio.addEventListener('submit', async (event) => {
                         event.preventDefault()
-                        //console.log(formularioSeleccionServicio.elements[servicios])
+                       
                         const serviciosSeleccionados = Array.from(formularioSeleccionServicio.elements['servicios'])
                             .filter(checkbox => checkbox.checked)
                             .map(checkbox => checkbox.value)
                         console.log(serviciosSeleccionados)
-                        //Obtener la fecha y hora
+            
                         const fechaHora = formularioSeleccionServicio.elements['fechaHora'].value
 
-                        //Realizar una solicitud al servidor para guardar los servicios seleccionados
+                   
                         const xhrguardarservicio = new XMLHttpRequest()
                         xhrguardarservicio.open('POST', '/guardar-servicios-usuario', true)
                         xhrguardarservicio.setRequestHeader('Content-Type', 'application/json')
@@ -182,7 +182,7 @@
                     const listaServiciosGuardados = document.getElementById('lista-servicios-guardados');
 
                     btnDesplegarServiciosGuardados.addEventListener('click', () => {
-                        // Solicitar los servicios guardados del servidor
+                
                         const xhrObtenerServiciosGuardados = new XMLHttpRequest();
                         xhrObtenerServiciosGuardados.open('POST', '/obtener-servicios-guardados', true);
                         xhrObtenerServiciosGuardados.onreadystatechange = function () {
