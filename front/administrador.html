@@ -438,14 +438,14 @@
 
         //Evento para traer los servicios
         function agregarManzana(IDM) {
-            // Guardamos el ID de la manzana para usarlo más adelante
+       
             const manzanaID = IDM;
 
             agregarServicio.style.display = "block";
             containerManzanas.style.display = "none";
             const servicioAgregar = document.getElementById("servicioAgregar");
 
-            // Llamamos al backend para obtener los servicios
+            
             const xhrAgregarServicio = new XMLHttpRequest();
             xhrAgregarServicio.open("post", "/agregar-servicio", true);
             xhrAgregarServicio.setRequestHeader("Content-Type", "application/json");
@@ -454,10 +454,10 @@
                 if (xhrAgregarServicio.readyState === 4) {
                     if (xhrAgregarServicio.status === 200) {
                         const servicios = JSON.parse(xhrAgregarServicio.responseText);
-                        console.log(servicios); // Aquí verás los servicios obtenidos del backend
+                        console.log(servicios);
 
                         const listaServicios2 = document.getElementById("listaServicios2");
-                        listaServicios2.innerHTML = ""; // Limpiar lista antes de agregar los servicios
+                        listaServicios2.innerHTML = ""; 
 
                         servicios.forEach((servicio) => {
                             const row = document.createElement("tr");
@@ -475,9 +475,9 @@
                 }
             };
 
-            xhrAgregarServicio.send(); // No necesitas enviar nada en este caso, solo obtienes los servicios
+            xhrAgregarServicio.send(); 
 
-            // Aquí agregamos el evento para enviar los servicios seleccionados
+            
             document.getElementById("servicioAgregado").addEventListener("click", function () {
                 const selectedServicios = [];
                 const checkboxes = document.querySelectorAll('input[name="servicios"]:checked');
@@ -487,10 +487,10 @@
                 });
 
                 if (selectedServicios.length > 0) {
-                    // Aquí tomamos el ID de la manzana desde la variable manzanaID
+               
                     const data = {
                         servicios: selectedServicios,
-                        manzana: manzanaID // Usamos la variable manzanaID aquí
+                        manzana: manzanaID 
                     };
 
                     const xhrAgregar = new XMLHttpRequest();
@@ -502,7 +502,7 @@
                             if (xhrAgregar.status === 200) {
                                 alert("Servicios agregados correctamente.");
                                 window.location.reload();
-                                // Aquí puedes actualizar la UI si es necesario
+                               
                             } else {
                                 console.error("Error al agregar los servicios.");
                             }
